@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.CartDao">
+  <resultMap id="ProCartMap" type="Cart" autoMapping="true">
+  	<id column="cid" property="cid"/>
+  	<result column="userTd" property="userTd"/>
+  	<result column="pid" property="pid"/>
+  	<result column="cnum" property="cnum"/>
+  	<result column="Subtotal" property="Subtotal"/>
+  	<result column="createTime" property="createTime"/>
+    <association property="user" javaType="User">
+    	<id column="userId" property="userId"/>
+		<result column="userName" property="userName"/>
+		<result column="userPassword" property="userPassword"/>
+		<result column="userGender" property="userGender"/>
+		<result column="userCode" property="userCode"/>
+		<result column="userEmail" property="userEmail"/>
+		<result column="userPhone" property="userPhone"/>
+		<result column="userPhoto" property="userPhoto"/>
+		<result column="createTime" property="createTime"/>
+		<result column="ucid" property="ucid"/>
+		<result column="blogId" property="blogId"/>
+    </association>
+  	<collection property="products" ofType="Product" autoMapping="true">
+  		<id column="pid" jdbcType="INTEGER" property="pid" />
+	    <result column="proCode" jdbcType="VARCHAR" property="proCode" />
+	    <result column="proName" jdbcType="VARCHAR" property="proName" />
+	    <result column="proDescrible" jdbcType="VARCHAR" property="proDescrible" />
+	    <result column="proDetailed" jdbcType="VARCHAR" property="proDetailed" />
+	    <result column="proPrice" jdbcType="DOUBLE" property="proPrice" />
+	    <result column="proPhoto" jdbcType="VARCHAR" property="proPhoto" />
+	    <result column="proNumber" jdbcType="INTEGER" property="proNumber" />
+	    <result column="proDiscount" jdbcType="DOUBLE" property="proDiscount" />
+	    <result column="proCoupon" jdbcType="DOUBLE" property="proCoupon" />
+	    <result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
+	    <result column="proType" jdbcType="VARCHAR" property="proType" />
+	    <result column="proValuation" jdbcType="VARCHAR" property="proValuation" />
+	    <result column="proNumViews" jdbcType="INTEGER" property="proNumViews" />
+	    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="yid" jdbcType="INTEGER" property="yid" />
+	    <result column="proFormDay" jdbcType="TIMESTAMP" property="proFormDay" />
+	    <result column="proToDay" jdbcType="TIMESTAMP" property="proToDay" />
+	    <result column="thrId" jdbcType="INTEGER" property="thrId" />
+	    <result column="hid" jdbcType="INTEGER" property="hid" />
+	    <result column="cid" jdbcType="INTEGER" property="cid" />
+  	</collection>
+  </resultMap>
+  <resultMap id="ProHotCartMap" type="Cart" autoMapping="true">
+  	<id column="cid" property="cid"/>
+  	<result column="userTd" property="userTd"/>
+  	<result column="pid" property="pid"/>
+  	<result column="cnum" property="cnum"/>
+  	<result column="Subtotal" property="Subtotal"/>
+  	<result column="createTime" property="createTime"/>
+    <association property="user" javaType="User">
+    	<id column="userId" property="userId"/>
+		<result column="userName" property="userName"/>
+		<result column="userPassword" property="userPassword"/>
+		<result column="userGender" property="userGender"/>
+		<result column="userCode" property="userCode"/>
+		<result column="userEmail" property="userEmail"/>
+		<result column="userPhone" property="userPhone"/>
+		<result column="userPhoto" property="userPhoto"/>
+		<result column="createTime" property="createTime"/>
+		<result column="ucid" property="ucid"/>
+		<result column="blogId" property="blogId"/>
+    </association>
+  	<association property="product" javaType="Product">
+  		<id column="pid" jdbcType="INTEGER" property="pid" />
+	    <result column="proCode" jdbcType="VARCHAR" property="proCode" />
+	    <result column="proName" jdbcType="VARCHAR" property="proName" />
+	    <result column="proDescrible" jdbcType="VARCHAR" property="proDescrible" />
+	    <result column="proDetailed" jdbcType="VARCHAR" property="proDetailed" />
+	    <result column="proPrice" jdbcType="DOUBLE" property="proPrice" />
+	    <result column="proPhoto" jdbcType="VARCHAR" property="proPhoto" />
+	    <result column="proNumber" jdbcType="INTEGER" property="proNumber" />
+	    <result column="proDiscount" jdbcType="DOUBLE" property="proDiscount" />
+	    <result column="proCoupon" jdbcType="DOUBLE" property="proCoupon" />
+	    <result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
+	    <result column="proType" jdbcType="VARCHAR" property="proType" />
+	    <result column="proValuation" jdbcType="VARCHAR" property="proValuation" />
+	    <result column="proNumViews" jdbcType="INTEGER" property="proNumViews" />
+	    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="yid" jdbcType="INTEGER" property="yid" />
+	    <result column="proFormDay" jdbcType="TIMESTAMP" property="proFormDay" />
+	    <result column="proToDay" jdbcType="TIMESTAMP" property="proToDay" />
+	    <result column="thrId" jdbcType="INTEGER" property="thrId" />
+	    <result column="hid" jdbcType="INTEGER" property="hid" />
+	    <result column="cid" jdbcType="INTEGER" property="cid" />
+  	</association>
+  	<collection property="hotType" ofType="Hoteltitle" autoMapping="true">
+  		<id property="zid" column="zid"/>
+  		<result column="hid" jdbcType="DOUBLE" property="hid" />
+  		<result column="zhotelType" jdbcType="VARCHAR" property="zhotelType" />
+  		<result column="zhotelPrice" property="zhotelPrice" />
+  		<result column="zDescrible" property="xxx" />
+  		<result column="zIcon" property="zIcon" />
+  		<result column="zhotelPhotos" property="zhotelPhotos" />
+  		<result column="pid" property="pid" />
+  	</collection>
+  </resultMap>
+  <select id="getProCart" parameterType="Integer" resultMap="ProCartMap">
+  	SELECT 
+	  u.`userName`,
+	  p.`pid`,
+	  p.hid,
+	  p.`proName`,
+	  p.`proPrice`,
+	  c.cid,
+	  c.cnum
+	FROM
+	  sots_user u 
+	  INNER JOIN sots_cart c 
+	    ON u.`userId` = c.`userId` 
+	  INNER JOIN sots_product p 
+	    ON p.`pid` = c.`pid` 
+	<where>
+		u.`userId` = #{userId} 
+		<if test="hid==0">
+	 		 AND p.`hid`=#{hid}
+		</if>
+	</where> 
+  </select>
+  <select id="getProHotCart" parameterType="Integer" resultMap="ProHotCartMap">
+  	SELECT 
+	  u.`userName`,
+	  c.cid,
+	  c.cnum,
+  	  c.`createTime`,
+	  p.`pid`,
+	  p.hid,
+	  p.`proName`,
+	  p.`proPrice`,
+	  h.`zhotelType`,
+	  h.`zhotelPrice` 
+	FROM
+	  sots_user u 
+	  INNER JOIN sots_cart c 
+	    ON u.`userId` = c.`userId` 
+	  INNER JOIN sots_product p 
+	    ON p.`pid` = c.`pid` 
+	  INNER JOIN sots_hoteltitle h 
+	    ON p.`hid` = h.`hid` 
+	WHERE u.`userId` = #{userId} 
+	  AND p.`pid` = #{pid} 
+  </select>
+  
+</mapper>  

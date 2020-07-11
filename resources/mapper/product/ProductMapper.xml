@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.ProductDao">
+  <resultMap id="BaseResultMap" type="Product">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="proCode" jdbcType="VARCHAR" property="proCode" />
+    <result column="proName" jdbcType="VARCHAR" property="proName" />
+    <result column="proDescrible" jdbcType="VARCHAR" property="proDescrible" />
+    <result column="proDetailed" jdbcType="VARCHAR" property="proDetailed" />
+    <result column="proPrice" jdbcType="DOUBLE" property="proPrice" />
+    <result column="proPhoto" jdbcType="VARCHAR" property="proPhoto" />
+    <result column="proNumber" jdbcType="INTEGER" property="proNumber" />
+    <result column="proDiscount" jdbcType="DOUBLE" property="proDiscount" />
+    <result column="proCoupon" jdbcType="DOUBLE" property="proCoupon" />
+    <result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
+    <result column="proType" jdbcType="VARCHAR" property="proType" />
+    <result column="proValuation" jdbcType="VARCHAR" property="proValuation" />
+    <result column="proNumViews" jdbcType="INTEGER" property="proNumViews" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="yid" jdbcType="INTEGER" property="yid" />
+    <result column="proFormDay" jdbcType="TIMESTAMP" property="proFormDay" />
+    <result column="proToDay" jdbcType="TIMESTAMP" property="proToDay" />
+    <result column="thrId" jdbcType="INTEGER" property="thrId" />
+    <result column="hid" jdbcType="INTEGER" property="hid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+  </resultMap>
+  <resultMap id="prohotels" type="Product">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="hid" jdbcType="INTEGER" property="hid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+  	<collection property="hotels" ofType="Hoteltitle" autoMapping="true">
+  		<id property="zid" column="zid"/>
+  		<result column="hid" jdbcType="DOUBLE" property="hid" />
+  		<result column="zhotelType" jdbcType="VARCHAR" property="zhotelType" />
+  		<result column="zhotelPrice" property="zhotelPrice" />
+  		<result column="zDescrible" property="xxx" />
+  		<result column="zIcon" property="zIcon" />
+  		<result column="zhotelPhotos" property="zhotelPhotos" />
+  		<result column="pid" property="pid" />
+  	</collection>
+  </resultMap>
+  <resultMap id="prophotos" type="Product">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="hid" jdbcType="INTEGER" property="hid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+  	<collection property="proPhotos" ofType="ProPhotos" autoMapping="true">
+  		<id property="kid" column="kid"/>
+  		<result column="kPhotos"  property="kp" />
+  		<result column="kType"  property="kType" />
+  		<result column="pid" property="pid" />
+  	</collection>
+  </resultMap>
+  <resultMap type="Product" id="ProductReviewUseraa" autoMapping="true">
+		<id column="pid" jdbcType="INTEGER" property="pid" />
+		    <result column="proCode" jdbcType="VARCHAR" property="proCode" />
+		    <result column="proName" jdbcType="VARCHAR" property="proName" />
+		    <result column="proDescrible" jdbcType="VARCHAR" property="proDescrible" />
+		    <result column="proDetailed" jdbcType="VARCHAR" property="proDetailed" />
+		    <result column="proPrice" jdbcType="DOUBLE" property="proPrice" />
+		    <result column="proPhoto" jdbcType="VARCHAR" property="proPhoto" />
+		    <result column="proNumber" jdbcType="INTEGER" property="proNumber" />
+		    <result column="proDiscount" jdbcType="DOUBLE" property="proDiscount" />
+		    <result column="proCoupon" jdbcType="DOUBLE" property="proCoupon" />
+		    <result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
+		    <result column="proType" jdbcType="VARCHAR" property="proType" />
+		    <result column="proValuation" jdbcType="VARCHAR" property="proValuation" />
+		    <result column="proNumViews" jdbcType="INTEGER" property="proNumViews" />
+		    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+		    <result column="yid" jdbcType="INTEGER" property="yid" />
+		    <result column="proFormDay" jdbcType="TIMESTAMP" property="proFormDay" />
+		    <result column="proToDay" jdbcType="TIMESTAMP" property="proToDay" />
+		    <result column="thrId" jdbcType="INTEGER" property="thrId" />
+		    <result column="hid" jdbcType="INTEGER" property="hid" />
+		    <result column="cid" jdbcType="INTEGER" property="cid" />
+		<collection property="users" javaType="User">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="pid" property="pid"/>
+			<result column="blogId" property="blogId"/>
+			<collection property="reviews" javaType="Review">
+				<id column="vid" property="vid"/>
+				<result column="userId" property="userId"/>
+				<result column="reViews" property="reViews"/>
+				<result column="createTime" property="createTime"/>
+				<result column="vCode" property="vCode"/>
+			</collection>
+		</collection>
+	</resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pid, proCode, proName, proDescribe, proDetailed, proPrice, proPhoto, proNumber, proDiscount, 
+    proCoupon, proAddress, proType, proValuation, proNumViews, createTime, yid, proFormDay, 
+    proToDay, thrId, hid, cid
+  </sql>
+  <select id="getAllList" parameterType="Product" resultMap="BaseResultMap">
+    select
+    *
+    from sots_product
+    <where>
+    	<if test="proName !=null and proName!=''">
+		 	and proName like concat('%',#{proName},'%')
+		</if>
+		<if test="proAddress !=null and proAddress!=''">
+		 	and proAddress like concat('%',#{proAddress},'%')
+		</if>
+		<if test="proType !=null and proType !=''">
+		 	and proType=#{proType}
+		</if>
+		<if test="yid == 1 || yid==2 || yid==3">
+		 	and yid = #{yid}
+		</if>
+	</where>
+  </select>
+  <select id="getProType" parameterType="Integer" resultType="Product">
+  	select DISTINCT
+    	proType
+    from sots_product
+    	<where>
+    		<if test="yid == 1 || yid==2 || yid==3">
+		 		and yid = #{yid}
+			</if>
+    	</where>
+  </select>
+  <select id="findID" parameterType="Integer" resultType="Product">
+    select
+    *
+    from sots_product
+    where pid = #{pid}
+  </select>
+  <select id="findHotel" parameterType="Integer" resultMap="prohotels">
+    SELECT 
+	  p.*,t.* 
+	FROM
+	  sots_product p,
+	  sots_hoteltitle t 
+	WHERE p.`hid` = t.`hid` 
+	AND p.`pid`=#{pid}  
+  </select>
+  <select id="findproPh" parameterType="Integer" resultMap="prophotos">
+  	SELECT 
+	  p.pid,
+	  t.*
+	FROM
+	  sots_product p,
+	  sots_prophotos t 
+	WHERE p.`pid` = t.`pid` 
+	AND p.`pid`=#{pid} 
+  </select>
+  
+  <select id="getProReviewaa" parameterType="String" resultMap="ProductReviewUseraa">
+		SELECT DISTINCT
+		  u.`userName`,p.`proName`,w.`reViews`,w.`createTime`
+		FROM
+		  sots_user u
+		  INNER JOIN sots_review w
+		    ON u.userId = w.userId
+		  INNER JOIN sots_product p
+		    ON w.`vCode` = p.`proCode`
+		    WHERE  p.`proCode`=#{proCode}
+	</select>
+  
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sots_product
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sots_product
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Product">
+    delete from sots_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Product">
+    insert into sots_product (pid, proCode, proName, 
+      proDescribe, proDetailed, proPrice, 
+      proPhoto, proNumber, proDiscount, 
+      proCoupon, proAddress, proType, 
+      proValuation, proNumViews, createTime, 
+      yid, proFormDay, proToDay, 
+      thrId, hid, cid)
+    values (#{pid,jdbcType=INTEGER}, #{procode,jdbcType=VARCHAR}, #{proname,jdbcType=VARCHAR}, 
+      #{prodescribe,jdbcType=VARCHAR}, #{prodetailed,jdbcType=VARCHAR}, #{proprice,jdbcType=DOUBLE}, 
+      #{prophoto,jdbcType=VARCHAR}, #{pronumber,jdbcType=INTEGER}, #{prodiscount,jdbcType=DOUBLE}, 
+      #{procoupon,jdbcType=DOUBLE}, #{proaddress,jdbcType=VARCHAR}, #{protype,jdbcType=VARCHAR}, 
+      #{provaluation,jdbcType=VARCHAR}, #{pronumviews,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{yid,jdbcType=INTEGER}, #{proformday,jdbcType=TIMESTAMP}, #{protoday,jdbcType=TIMESTAMP}, 
+      #{thrid,jdbcType=INTEGER}, #{hid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="Product">
+    insert into sots_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="procode != null">
+        proCode,
+      </if>
+      <if test="proname != null">
+        proName,
+      </if>
+      <if test="prodescribe != null">
+        proDescribe,
+      </if>
+      <if test="prodetailed != null">
+        proDetailed,
+      </if>
+      <if test="proprice != null">
+        proPrice,
+      </if>
+      <if test="prophoto != null">
+        proPhoto,
+      </if>
+      <if test="pronumber != null">
+        proNumber,
+      </if>
+      <if test="prodiscount != null">
+        proDiscount,
+      </if>
+      <if test="procoupon != null">
+        proCoupon,
+      </if>
+      <if test="proaddress != null">
+        proAddress,
+      </if>
+      <if test="protype != null">
+        proType,
+      </if>
+      <if test="provaluation != null">
+        proValuation,
+      </if>
+      <if test="pronumviews != null">
+        proNumViews,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="yid != null">
+        yid,
+      </if>
+      <if test="proformday != null">
+        proFormDay,
+      </if>
+      <if test="protoday != null">
+        proToDay,
+      </if>
+      <if test="thrid != null">
+        thrId,
+      </if>
+      <if test="hid != null">
+        hid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="procode != null">
+        #{procode,jdbcType=VARCHAR},
+      </if>
+      <if test="proname != null">
+        #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="prodescribe != null">
+        #{prodescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="prodetailed != null">
+        #{prodetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="proprice != null">
+        #{proprice,jdbcType=DOUBLE},
+      </if>
+      <if test="prophoto != null">
+        #{prophoto,jdbcType=VARCHAR},
+      </if>
+      <if test="pronumber != null">
+        #{pronumber,jdbcType=INTEGER},
+      </if>
+      <if test="prodiscount != null">
+        #{prodiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="procoupon != null">
+        #{procoupon,jdbcType=DOUBLE},
+      </if>
+      <if test="proaddress != null">
+        #{proaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="protype != null">
+        #{protype,jdbcType=VARCHAR},
+      </if>
+      <if test="provaluation != null">
+        #{provaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="pronumviews != null">
+        #{pronumviews,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yid != null">
+        #{yid,jdbcType=INTEGER},
+      </if>
+      <if test="proformday != null">
+        #{proformday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="protoday != null">
+        #{protoday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thrid != null">
+        #{thrid,jdbcType=INTEGER},
+      </if>
+      <if test="hid != null">
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="Product" resultType="java.lang.Long">
+    select count(*) from sots_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sots_product
+    <set>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.procode != null">
+        proCode = #{record.procode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proname != null">
+        proName = #{record.proname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodescribe != null">
+        proDescribe = #{record.prodescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodetailed != null">
+        proDetailed = #{record.prodetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proprice != null">
+        proPrice = #{record.proprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.prophoto != null">
+        proPhoto = #{record.prophoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pronumber != null">
+        proNumber = #{record.pronumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodiscount != null">
+        proDiscount = #{record.prodiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.procoupon != null">
+        proCoupon = #{record.procoupon,jdbcType=DOUBLE},
+      </if>
+      <if test="record.proaddress != null">
+        proAddress = #{record.proaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.protype != null">
+        proType = #{record.protype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provaluation != null">
+        proValuation = #{record.provaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pronumviews != null">
+        proNumViews = #{record.pronumviews,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yid != null">
+        yid = #{record.yid,jdbcType=INTEGER},
+      </if>
+      <if test="record.proformday != null">
+        proFormDay = #{record.proformday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.protoday != null">
+        proToDay = #{record.protoday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.thrid != null">
+        thrId = #{record.thrid,jdbcType=INTEGER},
+      </if>
+      <if test="record.hid != null">
+        hid = #{record.hid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sots_product
+    set pid = #{record.pid,jdbcType=INTEGER},
+      proCode = #{record.procode,jdbcType=VARCHAR},
+      proName = #{record.proname,jdbcType=VARCHAR},
+      proDescribe = #{record.prodescribe,jdbcType=VARCHAR},
+      proDetailed = #{record.prodetailed,jdbcType=VARCHAR},
+      proPrice = #{record.proprice,jdbcType=DOUBLE},
+      proPhoto = #{record.prophoto,jdbcType=VARCHAR},
+      proNumber = #{record.pronumber,jdbcType=INTEGER},
+      proDiscount = #{record.prodiscount,jdbcType=DOUBLE},
+      proCoupon = #{record.procoupon,jdbcType=DOUBLE},
+      proAddress = #{record.proaddress,jdbcType=VARCHAR},
+      proType = #{record.protype,jdbcType=VARCHAR},
+      proValuation = #{record.provaluation,jdbcType=VARCHAR},
+      proNumViews = #{record.pronumviews,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      yid = #{record.yid,jdbcType=INTEGER},
+      proFormDay = #{record.proformday,jdbcType=TIMESTAMP},
+      proToDay = #{record.protoday,jdbcType=TIMESTAMP},
+      thrId = #{record.thrid,jdbcType=INTEGER},
+      hid = #{record.hid,jdbcType=INTEGER},
+      cid = #{record.cid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Product">
+    update sots_product
+    <set>
+      <if test="procode != null">
+        proCode = #{procode,jdbcType=VARCHAR},
+      </if>
+      <if test="proname != null">
+        proName = #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="prodescribe != null">
+        proDescribe = #{prodescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="prodetailed != null">
+        proDetailed = #{prodetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="proprice != null">
+        proPrice = #{proprice,jdbcType=DOUBLE},
+      </if>
+      <if test="prophoto != null">
+        proPhoto = #{prophoto,jdbcType=VARCHAR},
+      </if>
+      <if test="pronumber != null">
+        proNumber = #{pronumber,jdbcType=INTEGER},
+      </if>
+      <if test="prodiscount != null">
+        proDiscount = #{prodiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="procoupon != null">
+        proCoupon = #{procoupon,jdbcType=DOUBLE},
+      </if>
+      <if test="proaddress != null">
+        proAddress = #{proaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="protype != null">
+        proType = #{protype,jdbcType=VARCHAR},
+      </if>
+      <if test="provaluation != null">
+        proValuation = #{provaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="pronumviews != null">
+        proNumViews = #{pronumviews,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yid != null">
+        yid = #{yid,jdbcType=INTEGER},
+      </if>
+      <if test="proformday != null">
+        proFormDay = #{proformday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="protoday != null">
+        proToDay = #{protoday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thrid != null">
+        thrId = #{thrid,jdbcType=INTEGER},
+      </if>
+      <if test="hid != null">
+        hid = #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Product">
+    update sots_product
+    set proCode = #{procode,jdbcType=VARCHAR},
+      proName = #{proname,jdbcType=VARCHAR},
+      proDescribe = #{prodescribe,jdbcType=VARCHAR},
+      proDetailed = #{prodetailed,jdbcType=VARCHAR},
+      proPrice = #{proprice,jdbcType=DOUBLE},
+      proPhoto = #{prophoto,jdbcType=VARCHAR},
+      proNumber = #{pronumber,jdbcType=INTEGER},
+      proDiscount = #{prodiscount,jdbcType=DOUBLE},
+      proCoupon = #{procoupon,jdbcType=DOUBLE},
+      proAddress = #{proaddress,jdbcType=VARCHAR},
+      proType = #{protype,jdbcType=VARCHAR},
+      proValuation = #{provaluation,jdbcType=VARCHAR},
+      proNumViews = #{pronumviews,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      yid = #{yid,jdbcType=INTEGER},
+      proFormDay = #{proformday,jdbcType=TIMESTAMP},
+      proToDay = #{protoday,jdbcType=TIMESTAMP},
+      thrId = #{thrid,jdbcType=INTEGER},
+      hid = #{hid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

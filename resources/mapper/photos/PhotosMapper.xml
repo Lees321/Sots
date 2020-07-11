@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.PhotosDao">
+		<select id="getBolglist" resultMap="olist">
+			SELECT b.*,u.userName FROM sots_blog b INNER 
+			JOIN sots_user u ON(b.userId=u.userId)
+		
+		</select>
+		<resultMap type="Blog" id="olist" autoMapping="true">
+		<association property="user" javaType="User">
+			<id column="userId" property="userId"/>
+			
+			<result column="userName" property="userName"/>
+		</association>
+		
+	</resultMap>
+</mapper>

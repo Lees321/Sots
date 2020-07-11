@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.WishDao">
+	<resultMap type="Wish" id="ProductWishUser" autoMapping="true">
+		<id column="sid" property="sid"/>
+		<result column="userId" property="userId"/>
+		<result column="pid" property="pid"/>
+		<association property="user" javaType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+		</association>
+		<collection property="products" ofType="Product" autoMapping="true">
+			<id column="pid"  property="pid" />
+		    <result column="proCode"  property="proCode" />
+		    <result column="proName"  property="proName" />
+		    <result column="proDescrible"  property="proDescrible" />
+		    <result column="proDetailed"  property="proDetailed" />
+		    <result column="proPrice"  property="proPrice" />
+		    <result column="proPhoto"  property="proPhoto" />
+		    <result column="proNumber"  property="proNumber" />
+		    <result column="proDiscount"  property="proDiscount" />
+		    <result column="proCoupon"  property="proCoupon" />
+		    <result column="proAddress"  property="proAddress" />
+		    <result column="proType"  property="proType" />
+		    <result column="proValuation"  property="proValuation" />
+		    <result column="proNumViews"  property="proNumViews" />
+		    <result column="createTime"  property="createTime" />
+		    <result column="yid"  property="yid" />
+		    <result column="proFormDay"  property="proFormDay" />
+		    <result column="proToDay"  property="proToDay" />
+		    <result column="thrId"  property="thrId" />
+		    <result column="hid"  property="hid" />
+		    <result column="cid"  property="cid" />
+		</collection>
+		
+	</resultMap>
+	<select id="getWishPro" parameterType="Integer" resultMap="ProductWishUser">
+		SELECT DISTINCT
+		  u.`userName`,p.*
+		FROM
+		  sots_user u
+		  INNER JOIN sots_wish w
+		    ON u.userId = w.userId
+		  INNER JOIN sots_product p
+		    ON w.`pid` = p.`pid`
+		    WHERE u.`userId`=#{userId}
+	</select>
+</mapper>

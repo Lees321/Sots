@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.ReviewDao">
+	<resultMap type="Review" id="ProductReviewUser" autoMapping="true">
+		<id column="vid" property="vid"/>
+		<result column="userId" property="userId"/>
+		<result column="reViews" property="reViews"/>
+		<result column="createTime" property="createTime"/>
+		<result column="vCode" property="vCode"/>
+		<association property="product" javaType="Product">
+			<id column="pid" jdbcType="INTEGER" property="pid" />
+		    <result column="proCode" jdbcType="VARCHAR" property="proCode" />
+		    <result column="proName" jdbcType="VARCHAR" property="proName" />
+		    <result column="proDescrible" jdbcType="VARCHAR" property="proDescrible" />
+		    <result column="proDetailed" jdbcType="VARCHAR" property="proDetailed" />
+		    <result column="proPrice" jdbcType="DOUBLE" property="proPrice" />
+		    <result column="proPhoto" jdbcType="VARCHAR" property="proPhoto" />
+		    <result column="proNumber" jdbcType="INTEGER" property="proNumber" />
+		    <result column="proDiscount" jdbcType="DOUBLE" property="proDiscount" />
+		    <result column="proCoupon" jdbcType="DOUBLE" property="proCoupon" />
+		    <result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
+		    <result column="proType" jdbcType="VARCHAR" property="proType" />
+		    <result column="proValuation" jdbcType="VARCHAR" property="proValuation" />
+		    <result column="proNumViews" jdbcType="INTEGER" property="proNumViews" />
+		    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+		    <result column="yid" jdbcType="INTEGER" property="yid" />
+		    <result column="proFormDay" jdbcType="TIMESTAMP" property="proFormDay" />
+		    <result column="proToDay" jdbcType="TIMESTAMP" property="proToDay" />
+		    <result column="thrId" jdbcType="INTEGER" property="thrId" />
+		    <result column="hid" jdbcType="INTEGER" property="hid" />
+		    <result column="cid" jdbcType="INTEGER" property="cid" />
+		</association>
+		<collection property="users" ofType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="blogId" property="blogId"/>
+		</collection>
+	</resultMap>
+	<select id="getProReview" parameterType="String" resultMap="ProductReviewUser">
+		SELECT 
+		  u.`userName`,u.userPhoto,p.`proName`,w.`reViews`,w.`createTime`
+		FROM
+		  sots_user u
+		  INNER JOIN sots_review w
+		    ON u.userId = w.userId
+		  INNER JOIN sots_product p
+		    ON w.`vCode` = p.`proCode`
+		    WHERE  p.`proCode`=#{proCode}
+		    order by w.`createTime`    desc
+	</select>
+	
+</mapper>

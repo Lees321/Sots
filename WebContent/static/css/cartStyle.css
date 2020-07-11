@@ -1,0 +1,45 @@
+/*body,div,a,img{padding: 0;margin: 0;font-size: 12px;color: #666;}
+a{text-decoration: none;}
+.clear{clear: both;}
+.buyCar{width: 1000px;height: 450px;margin: 0 auto;}
+.top{width: 1000px;height: 40px;line-height: 40px;background-color: #f3f3f3;border: 1px solid #f1f1f1;}
+.box1{width: 130px;float: left;}
+.box1 input{position: relative;top: 2px;}
+.box2{width: 440px;float: left;}
+.box3{width: 100px;float: left;text-align: center;}
+.box4{width: 100px;float: left;text-align: center;}
+.box5{width: 130px;float: left;text-align: center;}
+.box6{width: 100px;float: left;}
+.top2{width: 1000px;height: 40px;border-bottom: 2px solid #aaa;}
+
+.middle{width: 1000px;border: 1px solid #f1f1f1;}
+.goods{width: 1000px;height: 120px;padding-top: 18px;background-color: #fff4e8;}
+.box11{width: 130px;float: left;}
+.box11 img{width: 80px;height: 80px;vertical-align: top;}
+.box12{width: 210px;float: left;color: #333;}
+.jingzao{color: #fff;background-color: #e2231a;display: inline-block;width: 28px;height: 15px;line-height: 15px;text-align: center;}
+.shengxian{color: #02c555;border: 1px solid #02c555;display: inline-block;width: 28px;height: 15px;line-height: 15px;text-align: center;}
+.box13{width: 230px;float: left;text-indent: 20px;}
+.box14{width: 100px;float: left;text-align: center;color: #333;letter-spacing: 0.5px;}
+.box15{width: 100px;float: left;text-align: center;}
+.box15 .addLow{display: inline-block;width: 16px;height: 22px;border: 1px solid #cacbcb;position: relative;top: -4px;line-height: 22px;cursor: pointer;}
+.box15 .num{display: inline-block;width: 46px;height: 22px;border-top: 1px solid #cacbcb;border-bottom: 1px solid #cacbcb;position: relative;top: -4px;line-height: 22px;}
+.box16{width: 130px;float: left;text-align: center;}
+.box16 div{font-weight: bold;font-size: 13px;color: #000;letter-spacing: 1px;}
+.box17{width: 100px;float: left;}
+.goodsSpace{width: 1000px;height: 40px;border-top: 1px solid #ccc;}*/
+
+.bottom{width: 730px;height: 50px;border: 1px solid #f0f0f0;line-height: 50px;margin-top: 20px;}
+.bottom .left{width: 350px;height: 50px;float: left;}
+.bottom .left a{margin-left: 8px;}
+.bottom .right{width: 300px;height: 50px;float: right;}
+.bottom .right .allPrice{width: 260px;height: 40px;margin-top: 5px;float: left;position: relative;top: -10px;}
+.bottom .right .allPrice .str{margin-right: 32px;position: relative;right: 50px;}
+.bottom .right .allPrice .fontColor1{color: #f00;font-weight: bold;margin: 0 3px;}
+.bottom .right .allPrice .fontColor2{color: #f00;font-weight: bold;font-size: 16px;position: relative;right: 90px;}
+.bottom .right .balance{width: 96px;height: 50px;background-color: #e64346;color: #fff;font-size: 18px;position: relative;top: -47px;left: 42px;text-align: center;float: right;cursor: pointer;}
+.minus,.plus{
+    border: solid 1px #AAAAAA;
+            width: 23px;
+            display: inline-block;
+}

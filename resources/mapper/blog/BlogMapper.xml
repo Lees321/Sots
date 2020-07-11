@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.BlogDao">
+	<resultMap type="Blog" id="BlogList" autoMapping="true">
+		<id column="blogId" property="blogId"/>
+			<result column="blogTitle" property="blogTitle"/>
+			<result column="blogComment" property="blogComment"/>
+			<result column="blogComment2" property="blogComment2"/>
+			<result column="blogCommentPhoto" property="blogCommentPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="userId" property="userId"/>
+			<result column="bcode" property="bcode"/>
+			<result column="btid" property="btid"/>
+		<association property="blogType" javaType="BlogType">
+			<id column="btid" property="btid"/>
+			<result column="btType" property="btType"/>
+		</association>
+		<collection property="users" ofType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="blogId" property="blogId"/>
+		</collection>
+	</resultMap>
+	<resultMap type="Blog" id="BlogPost" autoMapping="true">
+		<id column="blogId" property="blogId"/>
+			<result column="blogTitle" property="blogTitle"/>
+			<result column="blogComment" property="blogComment"/>
+			<result column="blogComment2" property="blogComment2"/>
+			<result column="blogCommentPhoto" property="blogCommentPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="userId" property="userId"/>
+			<result column="bcode" property="bcode"/>
+			<result column="btid" property="btid"/>
+		<association property="blogType" javaType="BlogType">
+			<id column="btid" property="btid"/>
+			<result column="btType" property="btType"/>
+		</association>
+		<association property="user" javaType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="blogId" property="blogId"/>
+		</association>
+	</resultMap>
+	<resultMap type="Blog" id="BlogPostPicture" autoMapping="true">
+		<id column="blogId" property="blogId"/>
+			<result column="blogTitle" property="blogTitle"/>
+			<result column="blogComment" property="blogComment"/>
+			<result column="blogComment2" property="blogComment2"/>
+			<result column="blogCommentPhoto" property="blogCommentPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="userId" property="userId"/>
+			<result column="bcode" property="bcode"/>
+			<result column="btid" property="btid"/>
+		<association property="blogType" javaType="BlogType">
+			<id column="btid" property="btid"/>
+			<result column="btType" property="btType"/>
+		</association>
+		<association property="user" javaType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="blogId" property="blogId"/>
+		</association>
+		<collection property="pictures" ofType="BlogPicture" autoMapping="true">
+			<id column="bpid" property="bpid"/>
+			<result column="pictures" property="pictures"/>
+			<result column="blogId" property="blogId"/>
+		</collection>
+	</resultMap>
+	<select id="getBloglist" parameterType="Blog" resultMap="BlogList">
+		SELECT 
+		  u.`userId`,	
+		  u.`userName`,
+		  b.blogId,
+		  b.`blogTitle`,
+		  b.`blogCommentPhoto`,
+		  b.`blogComment`,
+		  b.`createTime`,
+		  t.`btType`
+		FROM
+		  sots_user u 
+		  INNER JOIN sots_blog b 
+		    ON u.`userId` = b.`userId` 
+		  INNER JOIN sots_blogType t
+		    ON b.`btid`=  t.`btid`    
+		  <where>
+		  	<if test="blogTitle !=null and blogTitle !=''">
+		  		and	b.`blogTitle` LIKE concat('%',#{blogTitle},'%')
+		  	</if>
+		  	<if test="btid>0">
+			 	AND b.btid= #{btid}
+			</if>
+			<if test="userId>0">
+			 	AND b.userId= #{userId}
+			</if>
+		  </where>
+	</select>
+	<select id="getBlogPost" parameterType="Integer" resultMap="BlogPost">
+		SELECT 
+		  u.`userName`,
+		  u.userPhoto,
+		  b.blogId,
+		  b.`blogTitle`,
+		  b.`blogCommentPhoto`,
+		  b.`blogComment`,
+		  b.`blogComment2`,
+		  b.`createTime`,
+		  t.`btType`
+		FROM
+		  sots_user u 
+		  INNER JOIN sots_blog b 
+		    ON u.`userId` = b.`userId` 
+		  INNER JOIN sots_blogType t
+		    ON b.`btid`=  t.`btid`    
+		  WHERE  b.`blogId`=#{blogId}  
+	</select>
+	<select id="getBlPoPicture" parameterType="Integer" resultMap="BlogPostPicture">
+		SELECT 
+		  u.`userName`,
+		  b.`blogTitle`,
+		  b.`blogCommentPhoto`,
+		  b.`blogComment`,
+		  b.`createTime`,
+		  t.`btType`,
+		  p.`pictures`
+		FROM
+		  sots_user u 
+		  INNER JOIN sots_blog b 
+		    ON u.`userId` = b.`userId` 
+		  INNER JOIN sots_blogType t
+		    ON b.`btid`=  t.`btid`  
+		  LEFT JOIN sots_blogPicture P
+		    ON b.`blogId`=p.`blogId`  
+		  WHERE  b.`blogId`=#{blogId}  
+	</select>
+</mapper>

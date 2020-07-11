@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sots.dao.BlReviewDao">
+	<resultMap type="BlReview" id="BlogBlReviewUser" autoMapping="true">
+		<id column="brid" property="brid"/>
+		<result column="brContent" property="brContent"/>
+		<result column="createTime" property="createTime"/>
+		<result column="userId" property="userId"/>
+		<result column="blogId" property="blogId"/>
+		<association property="blog" javaType="Blog">
+			<id column="blogId" property="blogId"/>
+			<result column="blogTitle" property="blogTitle"/>
+			<result column="blogComment" property="blogComment"/>
+			<result column="blogComment2" property="blogComment2"/>
+			<result column="blogCommentPhoto" property="blogCommentPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="userId" property="userId"/>
+			<result column="bcode" property="bcode"/>
+			<result column="btid" property="btid"/>
+		</association>
+		<collection property="users" ofType="User" autoMapping="true">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+			<result column="userPassword" property="userPassword"/>
+			<result column="userGender" property="userGender"/>
+			<result column="userCode" property="userCode"/>
+			<result column="userEmail" property="userEmail"/>
+			<result column="userPhone" property="userPhone"/>
+			<result column="userPhoto" property="userPhoto"/>
+			<result column="createTime" property="createTime"/>
+			<result column="ucid" property="ucid"/>
+			<result column="blogId" property="blogId"/>
+		</collection>
+	</resultMap>
+	<select id="getBlogBlReview" parameterType="Integer" resultMap="BlogBlReviewUser">
+		SELECT 
+		  u.`userName`,
+		  b.`blogId`,
+		  r.`brContent`,
+		  r.`createTime` 
+		FROM
+		  sots_user u 
+		  INNER JOIN sots_blreview r 
+		    ON u.userId = r.userId 
+		  INNER JOIN sots_blog b 
+		    ON r.blogId = b.blogId 
+		WHERE b.`blogId` = #{blogId}
+		 order by r.`createTime`    desc
+	</select>
+	
+</mapper>
